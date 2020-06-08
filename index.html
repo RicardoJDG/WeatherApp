@@ -11,6 +11,7 @@
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="font/Rimouski.css" />
   </head>
   <body>
     <div class="container-bg">
@@ -20,11 +21,20 @@
             <h1>Weather</h1>
           </div>
         </div>
-        <div class="row d-flex justify-content-center icon-container">
-          <div class="col-md-6 text-center rounded">
-            <img src="icons/a01d.png" />
+        <div class="row" style="padding: 2em 2em;">
+          <div class="col-md-4">
+            <div class="form-group input-group">
+              <label for="city" style="padding-right: 1em;">Ciudad:</label>
+              <input type="text" class="form-control" id="city" name="city" />
+              <div class="input-group-append">
+                <button class="btn btn-info" type="submit">
+                  Search
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="row d-flex justify-content-center icon-container"></div>
       </div>
     </div>
 

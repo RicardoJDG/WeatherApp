@@ -10,3 +10,19 @@
 h1 {
   text-align: center;
 }
+
+.col-md-4 p {
+  font-family: "Rimouski", sans-serif;
+}
+
+.error {
+  background-color: lightcoral;
+}
+
+.col-md-4 p:first-of-type {
+  font-size: 2em;
+}
+
+.col-md-4 p:last-of-type {
+  font-size: 5em;
+}
