@@ -45,6 +45,10 @@ function renderSuccess(jsonData) {
   return weatherData.city_name;
 }
 
+function addMarker(lat, lon) {
+  var marker = new mapboxgl.Marker().setLngLat([lon, lat]).addTo(map);
+}
+
 //Catch function
 function renderFail() {
   let col = document.createElement("div");
@@ -79,7 +83,10 @@ async function getWeather(onSuccess, onFail) {
   cities.forEach((x) => {
     fetch(`${baseURL}?lat=${x.latitude}&lon=${x.longitude}&key=${apiKey}`)
       .then((response) => response.json())
-      .then((jsonData) => (x.name = onSuccess(jsonData)))
+      .then((jsonData) => {
+        x.name = onSuccess(jsonData);
+        addMarker(x.latitude, x.longitude);
+      })
       .catch((error) => {
         console.error(error);
         return onFail();
@@ -107,3 +114,4 @@ addBtn.addEventListener("click", function () {
 });
 
 getWeather(renderSuccess, renderFail);
+console.log(`${baseURL}?lat=${x.latitude}&lon=${x.longitude}&key=${apiKey}`);

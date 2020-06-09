@@ -12,6 +12,11 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="font/Rimouski.css" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="container-bg">
@@ -61,6 +66,18 @@
           </div>
         </div>
         <div class="row d-flex justify-content-center icon-container"></div>
+
+        <div id="map" style="width: 800px; height: 600px; margin: auto;"></div>
+        <script>
+          mapboxgl.accessToken =
+            "pk.eyJ1IjoicmljYXJkb2pkZyIsImEiOiJja2I4N2NzY3EwMWZ1MzJvMWZlYXd1eXJvIn0.d_ppPCfFKJ0X_cDkV3Exgg";
+          var map = new mapboxgl.Map({
+            container: "map",
+            style: "mapbox://styles/mapbox/streets-v11",
+            center: [2.1589899, 41.3887901],
+            zoom: 1,
+          });
+        </script>
       </div>
     </div>
 

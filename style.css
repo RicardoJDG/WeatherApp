@@ -9,6 +9,8 @@ html {
 
 .container {
   background-color: #daad86;
+  margin-bottom: 3em;
+  padding-bottom: 3em;
 }
 
 h1 {
@@ -34,4 +36,13 @@ h1 {
 label,
 input {
   padding-left: 3em;
+}
+
+.marker {
+  background-image: url("mapbox-icon.png");
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
 }
