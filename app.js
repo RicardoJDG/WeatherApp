@@ -75,41 +75,30 @@ function addCity(lat, lon) {
 }
 
 //Main functon
-async function getWeather(onSuccess, onFail, filteredCities) {
-  if (typeof filteredCities !== "undefined") {
-    filteredCities.forEach((x) => {
-      fetch(`${baseURL}?lat=${x.latitude}&lon=${x.longitude}&key=${apiKey}`)
-        .then((response) => response.json())
-        .then((jsonData) => {
-          x.name = onSuccess(jsonData);
-        })
-        .catch((error) => {
-          console.error(error);
-          return onFail();
-        });
-    });
-  } else {
-    cities.forEach((x) => {
-      fetch(`${baseURL}?lat=${x.latitude}&lon=${x.longitude}&key=${apiKey}`)
-        .then((response) => response.json())
-        .then((jsonData) => (x.name = onSuccess(jsonData)))
-        .catch((error) => {
-          console.error(error);
-          return onFail();
-        });
-    });
-  }
-  console.log(cities);
+async function getWeather(onSuccess, onFail) {
+  cities.forEach((x) => {
+    fetch(`${baseURL}?lat=${x.latitude}&lon=${x.longitude}&key=${apiKey}`)
+      .then((response) => response.json())
+      .then((jsonData) => (x.name = onSuccess(jsonData)))
+      .catch((error) => {
+        console.error(error);
+        return onFail();
+      });
+  });
 }
 
 //Filter
 filterInput.addEventListener("keyup", function (event) {
   const value = event.target.value;
   console.log(value);
-  let cityFilter = cities.filter((x) => x.name.startsWith(value));
-  iconContainer.innerHTML = "";
-  console.log(cityFilter);
-  getWeather(renderSuccess, renderFail, cityFilter);
+  let containers = document.querySelectorAll(".col-md-4");
+  for (let i = 2; i < containers.length; i++) {
+    if (!containers[i].childNodes[0].innerText.startsWith(value)) {
+      containers[i].style.display = "none";
+    } else {
+      containers[i].style.display = "block";
+    }
+  }
 });
 
 addBtn.addEventListener("click", function () {
