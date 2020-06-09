@@ -1,6 +1,10 @@
+html {
+  background-color: #659dbd;
+}
+
 .container-bg {
   background-color: #659dbd;
-  height: 100vh;
+  height: 100%;
 }
 
 .container {
@@ -25,4 +29,9 @@ h1 {
 
 .col-md-4 p:last-of-type {
   font-size: 5em;
+}
+
+label,
+input {
+  padding-left: 3em;
 }

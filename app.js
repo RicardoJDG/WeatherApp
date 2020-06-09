@@ -2,7 +2,12 @@ const apiKey = "114c32232e8a40cb922bdccee68b13c6";
 const baseURL = "https://api.weatherbit.io/v2.0/current";
 const iconContainer = document.querySelector(".icon-container");
 const cities = [];
+const addBtn = document.querySelector("#add");
+const filterInput = document.querySelector("#city");
+const latitudeInput = document.querySelector("#latitude");
+const longitudeInput = document.querySelector("#longitude");
 
+// Predefined cities
 cities.push({
   name: "Barcelona",
   latitude: 41.3887901,
@@ -21,11 +26,9 @@ cities.push({
   longitude: 151.2073212,
 });
 
-let lat = "41.404503";
-let lon = "2.173884";
-
-function renderSuccess(data) {
-  let weatherData = data.data[0];
+//Rendering function
+function renderSuccess(jsonData) {
+  let weatherData = jsonData.data[0];
   let icon = document.createElement("img");
   let col = document.createElement("div");
   let city = document.createElement("p");
@@ -34,13 +37,15 @@ function renderSuccess(data) {
   icon.setAttribute("alt", weatherData.weather.description);
   col.setAttribute("class", "col-md-4 text-center rounded");
   city.innerText = weatherData.city_name;
-  temperature.innerText = `${weatherData.temp}º`;
+  temperature.innerText = `${weatherData.temp}ºC`;
   iconContainer.appendChild(col);
   col.appendChild(city);
   col.appendChild(icon);
   col.appendChild(temperature);
+  return weatherData.city_name;
 }
 
+//Catch function
 function renderFail() {
   let col = document.createElement("div");
   let icon = document.createElement("img");
@@ -58,16 +63,58 @@ function renderFail() {
   col.appendChild(questionMark);
 }
 
-async function getWeather(onSuccess, onFail) {
-  cities.forEach((x) => {
-    fetch(`${baseURL}?lat=${x.latitude}&lon=${x.longitude}&key=${apiKey}`)
-      .then((response) => response.json())
-      .then((jsonData) => onSuccess(jsonData))
-      .catch((error) => {
-        console.error(error);
-        return onFail();
-      });
+//Adding a city
+function addCity(lat, lon) {
+  cities.push({
+    name: "n/a",
+    latitude: parseFloat(lat),
+    longitude: parseFloat(lon),
   });
+  //We called the main function again with the city added
+  getWeather(renderSuccess, renderFail);
 }
+
+//Main functon
+async function getWeather(onSuccess, onFail, filteredCities) {
+  if (typeof filteredCities !== "undefined") {
+    filteredCities.forEach((x) => {
+      fetch(`${baseURL}?lat=${x.latitude}&lon=${x.longitude}&key=${apiKey}`)
+        .then((response) => response.json())
+        .then((jsonData) => {
+          x.name = onSuccess(jsonData);
+        })
+        .catch((error) => {
+          console.error(error);
+          return onFail();
+        });
+    });
+  } else {
+    cities.forEach((x) => {
+      fetch(`${baseURL}?lat=${x.latitude}&lon=${x.longitude}&key=${apiKey}`)
+        .then((response) => response.json())
+        .then((jsonData) => (x.name = onSuccess(jsonData)))
+        .catch((error) => {
+          console.error(error);
+          return onFail();
+        });
+    });
+  }
+  console.log(cities);
+}
+
+//Filter
+filterInput.addEventListener("keyup", function (event) {
+  const value = event.target.value;
+  console.log(value);
+  let cityFilter = cities.filter((x) => x.name.startsWith(value));
+  iconContainer.innerHTML = "";
+  console.log(cityFilter);
+  getWeather(renderSuccess, renderFail, cityFilter);
+});
+
+addBtn.addEventListener("click", function () {
+  addCity(latitudeInput.value, longitudeInput.value);
+  iconContainer.innerHTML = "";
+});
 
 getWeather(renderSuccess, renderFail);

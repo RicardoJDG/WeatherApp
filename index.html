@@ -21,16 +21,42 @@
             <h1>Weather</h1>
           </div>
         </div>
-        <div class="row" style="padding: 2em 2em;">
+        <div
+          class="row d-flex justify-content-between"
+          style="padding: 2em 2em;"
+        >
           <div class="col-md-4">
             <div class="form-group input-group">
-              <label for="city" style="padding-right: 1em;">Ciudad:</label>
+              <label for="city" style="padding-right: 1em;">City filter:</label>
               <input type="text" class="form-control" id="city" name="city" />
-              <div class="input-group-append">
-                <button class="btn btn-info" type="submit">
-                  Search
-                </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h4>Add a city through lat and lon</h4>
+            <div class="form-group input-group" style="padding: 0 2em;">
+              <div class="col-xs-1">
+                <label for="latitude">Lat:</label>
+                <input
+                  type="number"
+                  step="any"
+                  class="form-control"
+                  id="latitude"
+                  name="latitude"
+                />
               </div>
+              <div class="col-xs-1">
+                <label for="longitude">Lon:</label>
+                <input
+                  type="number"
+                  step="any"
+                  class="form-control"
+                  id="longitude"
+                  name="longitude"
+                />
+              </div>
+              <button class="btn btn-info" type="submit" id="add">
+                Add
+              </button>
             </div>
           </div>
         </div>
